@@ -8,7 +8,7 @@ import le1.plp.expressions2.memory.AmbienteExecucao;
 /**
  * Um objeto desta classe representa uma Expressao de Soma.
  */
-public class ExpSoma extends ExpBinaria {
+public class ExpSoma extends ExpBinariaNumerica {
 
 	/**
 	 * Controi uma Expressao de Soma com as sub-expressoes especificadas.
@@ -40,23 +40,6 @@ public class ExpSoma extends ExpBinaria {
 		}
 	}
 	
-	/**
-	 * Realiza a verificacao de tipos desta expressao.
-	 *
-	 * @param amb
-	 *            o ambiente de compila��o.
-	 *
-	 * @return <code>true</code> se os tipos da expressao sao validos;
-	 *         <code>false</code> caso contrario.
-	 */
-	protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb) {
-		return eRealOuInteiro(getEsq().getTipo(amb)) && eRealOuInteiro(getDir().getTipo(amb));
-	}
-
-	private boolean eRealOuInteiro(Tipo tp) {
-		return tp.eInteiro() || tp.eReal();
-	}
-
 	/**
 	 * Retorna os tipos possiveis desta expressao.
 	 * 

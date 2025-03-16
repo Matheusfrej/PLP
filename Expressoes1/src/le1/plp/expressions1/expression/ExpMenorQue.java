@@ -8,7 +8,7 @@ import le1.plp.expressions2.memory.AmbienteExecucao;
 /**
  * Um objeto desta classe representa uma Expressao de Menor Que.
  */
-public class ExpMenorQue extends ExpBinaria {
+public class ExpMenorQue extends ExpBinariaNumerica {
 
 	/**
 	 * Controi uma Expressao de Menor Que com as sub-expressoes especificadas.
@@ -29,21 +29,8 @@ public class ExpMenorQue extends ExpBinaria {
 	 */
 	public Valor avaliar(AmbienteExecucao amb) {
 		return new ValorBooleano(
-			((ValorInteiro) getEsq().avaliar(amb)).valor() <
-			((ValorInteiro) getDir().avaliar(amb)).valor() );
-	}
-	
-	/**
-	 * Realiza a verificacao de tipos desta expressao.
-	 *
-	 * @param amb
-	 *            o ambiente de compila��o.
-	 *
-	 * @return <code>true</code> se os tipos da expressao sao validos;
-	 *         <code>false</code> caso contrario.
-	 */
-	protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb) {
-		return (getEsq().getTipo(amb).eInteiro() && getDir().getTipo(amb).eInteiro());
+			((ValorNumerico<?>) getEsq().avaliar(amb)).valor().doubleValue() <
+			((ValorNumerico<?>) getDir().avaliar(amb)).valor().doubleValue() );
 	}
 
 	/**

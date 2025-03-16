@@ -8,7 +8,7 @@ import le1.plp.expressions2.memory.AmbienteExecucao;
 /**
  * Um objeto desta classe representa uma Expressao de Maior Que.
  */
-public class ExpMaiorQue extends ExpBinaria {
+public class ExpMaiorQue extends ExpBinariaNumerica {
 
 	/**
 	 * Controi uma Expressao de Maior Que com as sub-expressoes especificadas.
@@ -29,23 +29,10 @@ public class ExpMaiorQue extends ExpBinaria {
 	 */
 	public Valor avaliar(AmbienteExecucao amb) {
 		return new ValorBooleano(
-			((ValorInteiro) getEsq().avaliar(amb)).valor() >
-			((ValorInteiro) getDir().avaliar(amb)).valor() );
+			((ValorNumerico<?>) getEsq().avaliar(amb)).valor().doubleValue() >
+			((ValorNumerico<?>) getDir().avaliar(amb)).valor().doubleValue() );
 	}
 	
-	/**
-	 * Realiza a verificacao de tipos desta expressao.
-	 *
-	 * @param amb
-	 *            o ambiente de compila��o.
-	 *
-	 * @return <code>true</code> se os tipos da expressao sao validos;
-	 *         <code>false</code> caso contrario.
-	 */
-	protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb) {
-		return (getEsq().getTipo(amb).eInteiro() && getDir().getTipo(amb).eInteiro());
-	}
-
 	/**
 	 * Retorna os tipos possiveis desta expressao.
 	 * 
