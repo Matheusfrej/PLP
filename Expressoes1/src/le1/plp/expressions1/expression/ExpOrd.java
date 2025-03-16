@@ -6,32 +6,29 @@ import le1.plp.expressions2.memory.AmbienteCompilacao;
 import le1.plp.expressions2.memory.AmbienteExecucao;
 
 /**
-* Um objeto desta classe representa uma Expressao de menos unario.
-*/
-
-public class ExpMenos extends ExpUnaria{
+ * Um objeto desta classe representa uma Expressao de ordem da tabela ascii.
+ */
+public class ExpOrd extends ExpUnaria {
 
 	/**
-	 * Controi uma Expressao de menos unario com expressao especificada
-	 *
-	 * @param exp Expressao cuja avaliacao resulta <code>ValorInteiro</code>.
+	 * Controi uma Expressao de ordem da tabela ascii com a expressao especificada
+	 * assume-se que <code>exp</code> é uma expressao cuja avaliacao
+	 * resulta num <code>ValorChar</code>
 	 */
-	public ExpMenos(Expressao exp){
-		super(exp, "-");
+	public ExpOrd(Expressao exp) {
+		super(exp, "ord");
 	}
 
 	/**
-	 * Retorna o valor da Expressao de menos unario.
+	 * Retorna o valor da Expressao de ordem da tabela ascii.
 	 * 
 	 * @param amb
 	 *            o ambiente de execu��o.
 	 */
 	public Valor avaliar(AmbienteExecucao amb) {
-		return getExp() instanceof ValorInteiro ?
-		 new ValorInteiro((int)(- (((ValorInteiro)getExp().avaliar(amb)).valor()))) :
-		 new ValorReal(- ((ValorReal)getExp().avaliar(amb)).valor());
+		return new ValorInteiro ((int) ((ValorChar) getExp().avaliar(amb)).valor());
 	}
-
+	
 	/**
 	 * Realiza a verificacao de tipos desta expressao.
 	 *
@@ -42,7 +39,7 @@ public class ExpMenos extends ExpUnaria{
 	 *         <code>false</code> caso contrario.
 	 */
 	protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb) {
-		return (getExp().getTipo(amb).eInteiro() || getExp().getTipo(amb).eReal());
+		return (getExp().getTipo(amb).eChar());
 	}
 
 	/**
@@ -54,6 +51,7 @@ public class ExpMenos extends ExpUnaria{
 	 * @return os tipos possiveis desta expressao.
 	 */
 	public Tipo getTipo(AmbienteCompilacao amb) {
-		return getExp().getTipo(amb).eInteiro() ? TipoPrimitivo.INTEIRO : TipoPrimitivo.REAL;
+		return TipoPrimitivo.INTEIRO;
 	}
+
 }

@@ -5,10 +5,10 @@ import le1.plp.expressions1.util.TipoPrimitivo;
 /**
  * Objetos desta classe encapsulam valor inteiro.
  */
-public class ValorInteiro extends ValorNumerico<Integer> {
+public class ValorReal extends ValorNumerico<Double> {
 	
-	public ValorInteiro(int valor) {
-		super(valor, TipoPrimitivo.INTEIRO);
+	public ValorReal(double valor) {
+		super(valor, TipoPrimitivo.REAL);
 	}
 
 }

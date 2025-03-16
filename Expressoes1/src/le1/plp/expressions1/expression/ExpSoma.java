@@ -28,9 +28,16 @@ public class ExpSoma extends ExpBinaria {
 	 *            o ambiente de execu��o.
 	 */
 	public Valor avaliar(AmbienteExecucao amb) {
-		return new ValorInteiro(
-			((ValorInteiro) getEsq().avaliar(amb)).valor() +
-			((ValorInteiro) getDir().avaliar(amb)).valor() );
+		Valor vEsq = getEsq().avaliar(amb);
+		Valor vDir = getDir().avaliar(amb);
+
+		double resultado = ((ValorNumerico<?>) vEsq).valor().doubleValue() + ((ValorNumerico<?>) vDir).valor().doubleValue();
+		
+		if (vEsq instanceof ValorInteiro && vDir instanceof ValorInteiro) {
+			return new ValorInteiro((int) resultado);
+		} else {
+			return new ValorReal(resultado);
+		}
 	}
 	
 	/**
@@ -43,7 +50,11 @@ public class ExpSoma extends ExpBinaria {
 	 *         <code>false</code> caso contrario.
 	 */
 	protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb) {
-		return (getEsq().getTipo(amb).eInteiro() && getDir().getTipo(amb).eInteiro());
+		return eRealOuInteiro(getEsq().getTipo(amb)) && eRealOuInteiro(getDir().getTipo(amb));
+	}
+
+	private boolean eRealOuInteiro(Tipo tp) {
+		return tp.eInteiro() || tp.eReal();
 	}
 
 	/**
@@ -55,7 +66,7 @@ public class ExpSoma extends ExpBinaria {
 	 * @return os tipos possiveis desta expressao.
 	 */
 	public Tipo getTipo(AmbienteCompilacao amb) {
-		return TipoPrimitivo.INTEIRO;
+		return getEsq().getTipo(amb).eInteiro() && getDir().getTipo(amb).eInteiro() ? TipoPrimitivo.INTEIRO : TipoPrimitivo.REAL;
 	}
 
 }
