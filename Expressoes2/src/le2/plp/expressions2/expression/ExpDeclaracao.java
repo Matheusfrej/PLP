@@ -4,8 +4,6 @@ import le2.plp.expressions1.util.Tipo;
 import le2.plp.expressions2.declaration.Declaracao;
 import le2.plp.expressions2.memory.AmbienteCompilacao;
 import le2.plp.expressions2.memory.AmbienteExecucao;
-import le2.plp.expressions2.memory.ContextoCompilacao;
-import le2.plp.expressions2.memory.ContextoExecucao;
 import le2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import le2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 
@@ -23,11 +21,7 @@ public class ExpDeclaracao implements Expressao {
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
 		ambiente.incrementa();
-		AmbienteExecucao aux = new ContextoExecucao();
-		aux.incrementa();
-		declaracao.elabora(ambiente, aux);
-		declaracao.incluir(ambiente, aux);
-		aux.restaura();
+		declaracao.elabora(ambiente);
 		Valor result = expressao.avaliar(ambiente);
 		ambiente.restaura();
 
@@ -50,20 +44,9 @@ public class ExpDeclaracao implements Expressao {
 	public boolean checaTipo(AmbienteCompilacao ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 		ambiente.incrementa();
-		boolean result = false;
-		try{
-			if(declaracao.checaTipo(ambiente)){
-				AmbienteCompilacao aux = new ContextoCompilacao();
-				aux.incrementa();
-				declaracao.elabora(ambiente, aux);
-				declaracao.incluir(ambiente, aux);
-				aux.restaura();
-				result = expressao.checaTipo(ambiente);
-			} else
-				result = false;
-		} finally {
-			ambiente.restaura();
-		}
+		declaracao.elabora(ambiente);
+		boolean result = expressao.checaTipo(ambiente);
+		ambiente.restaura();
 		return result;
 	}
 

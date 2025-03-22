@@ -22,12 +22,12 @@ public class DecVariavel implements Declaracao {
 		return expressao;
 	}
 
-	public void elabora(AmbienteExecucao amb, AmbienteExecucao aux) {
-		aux.map(getId(), getExpressao().avaliar(amb));
+	public void elabora(AmbienteExecucao amb) {
+		amb.map(getId(), getExpressao().avaliar(amb));
 	}
 	
-	public void elabora(AmbienteCompilacao amb, AmbienteCompilacao aux) throws VariavelJaDeclaradaException {
-		aux.map(getId(), getExpressao().getTipo(amb));
+	public void elabora(AmbienteCompilacao amb) throws VariavelJaDeclaradaException {
+		amb.map(getId(), getExpressao().getTipo(amb));
 	}
 	
 	public boolean checaTipo(AmbienteCompilacao amb){
@@ -37,13 +37,4 @@ public class DecVariavel implements Declaracao {
 	public void reduzir(AmbienteExecucao amb){
 		amb.map(getId(), null);
 	}
-
-	public void incluir(AmbienteExecucao amb, AmbienteExecucao aux) throws VariavelJaDeclaradaException {
-		amb.map(getId(), aux.get(getId()));
-	}
-
-	public void incluir(AmbienteCompilacao amb, AmbienteCompilacao aux) throws VariavelJaDeclaradaException {
-		amb.map(getId(), aux.get(getId()));
-	}
-
 }
